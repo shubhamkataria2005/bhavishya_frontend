@@ -20,6 +20,8 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
     { label: 'AI Assistant', page: 'chat'        },
   ];
 
+  const isAdmin = user && (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN');
+
   const handleNavigate = (page) => {
     onNavigate(page);
     setMenuOpen(false);
@@ -46,6 +48,26 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
               </button>
             </li>
           ))}
+          {user && (
+            <li>
+              <button
+                className={`nav-link ${currentPage === 'messages' ? 'active' : ''}`}
+                onClick={() => handleNavigate('messages')}
+              >
+                💬 Messages
+              </button>
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              <button
+                className={`nav-link admin-link ${currentPage === 'admin' ? 'active' : ''}`}
+                onClick={() => handleNavigate('admin')}
+              >
+                ⚙️ Admin
+              </button>
+            </li>
+          )}
         </ul>
 
         <div className="navbar-auth">
@@ -88,11 +110,23 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
               {link.label}
             </button>
           ))}
+          {user && (
+            <button
+              className={`mobile-link ${currentPage === 'messages' ? 'active' : ''}`}
+              onClick={() => handleNavigate('messages')}
+            >
+              💬 Messages
+            </button>
+          )}
+          {isAdmin && (
+            <button className="mobile-link admin-link" onClick={() => handleNavigate('admin')}>
+              ⚙️ Admin Panel
+            </button>
+          )}
           {user ? (
-            <>
-              <span className="mobile-link" style={{ opacity: 0.6 }}>Hi, {user.username}</span>
-              <button className="mobile-link mobile-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>Logout</button>
-            </>
+            <button className="mobile-link mobile-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>
+              Logout
+            </button>
           ) : (
             <>
               <button className="mobile-link" onClick={() => handleNavigate('login')}>Sign In</button>

@@ -9,6 +9,8 @@ import AboutPage from './pages/aboutPage/AboutPage.jsx';
 import DistributorPage from './pages/distributorPage/DistributorPage.jsx';
 import LoginPage from './pages/loginPage/LoginPage.jsx';
 import RegisterPage from './pages/registerPage/RegisterPage.jsx';
+import AdminPage from './pages/admin/AdminPage.jsx';
+import MessagesPage from './pages/messagesPage/MessagesPage.jsx';
 import ChatAssistant from './components/tools/ChatAssistant.jsx';
 import './App.css';
 
@@ -33,7 +35,11 @@ function App() {
     setSessionToken(token);
     localStorage.setItem('bhavishya_token', token);
     localStorage.setItem('bhavishya_user', JSON.stringify(userData));
-    setCurrentPage('home');
+    if (userData.role === 'ADMIN' || userData.role === 'SUPER_ADMIN') {
+      setCurrentPage('admin');
+    } else {
+      setCurrentPage('home');
+    }
   };
 
   const handleLogout = () => {
@@ -71,13 +77,21 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
     else if (path === '/chat') onNavigate('chat');
     else if (path === '/login') onNavigate('login');
     else if (path === '/register') onNavigate('register');
+    else if (path === '/admin') onNavigate('admin');
+    else if (path === '/messages') onNavigate('messages');
   }, [location.pathname]);
 
   useEffect(() => {
     const map = {
-      home: '/', inventory: '/products', about: '/about',
-      distributor: '/distributor', chat: '/chat',
-      login: '/login', register: '/register'
+      home: '/',
+      inventory: '/products',
+      about: '/about',
+      distributor: '/distributor',
+      chat: '/chat',
+      login: '/login',
+      register: '/register',
+      admin: '/admin',
+      messages: '/messages',
     };
     const target = map[currentPage] || '/';
     if (location.pathname !== target) navigate(target);
@@ -106,6 +120,8 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/login" element={<LoginPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />} />
           <Route path="/register" element={<RegisterPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />} />
+          <Route path="/admin" element={<AdminPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
+          <Route path="/messages" element={<MessagesPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
           <Route path="*" element={<HomePage onNavigate={onNavigate} />} />
         </Routes>
       </main>
