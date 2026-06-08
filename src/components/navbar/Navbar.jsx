@@ -13,10 +13,11 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
   }, []);
 
   const navLinks = [
-    { label: 'Home',        page: 'home'        },
-    { label: 'Products',    page: 'inventory'   },
-    { label: 'About Us',    page: 'about'       },
-    { label: 'Distributor', page: 'distributor' },
+    { label: 'Home',         page: 'home'        },
+    { label: 'Products',     page: 'inventory'   },
+    { label: 'About Us',     page: 'about'       },
+    { label: 'Distributor',  page: 'distributor' },
+    { label: 'AI Assistant', page: 'chat'        },
   ];
 
   const handleNavigate = (page) => {
@@ -45,16 +46,6 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
               </button>
             </li>
           ))}
-          {user && (
-            <li>
-              <button
-                className={`nav-link ${currentPage === 'dashboard' ? 'active' : ''}`}
-                onClick={() => handleNavigate('dashboard')}
-              >
-                Dashboard
-              </button>
-            </li>
-          )}
         </ul>
 
         <div className="navbar-auth">
@@ -70,7 +61,7 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
               <button className="btn-nav-login" onClick={() => handleNavigate('login')}>
                 Sign In
               </button>
-              <button className="btn-nav-register" onClick={() => handleNavigate('register')}>
+              <button className="btn-nav-register" onClick={() => handleNavigate('distributor')}>
                 Order Now
               </button>
             </>
@@ -99,13 +90,12 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
           ))}
           {user ? (
             <>
-              <button className="mobile-link" onClick={() => handleNavigate('dashboard')}>Dashboard</button>
               <button className="mobile-link mobile-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>Logout</button>
             </>
           ) : (
             <>
               <button className="mobile-link" onClick={() => handleNavigate('login')}>Sign In</button>
-              <button className="mobile-link" onClick={() => handleNavigate('register')}>Order Now</button>
+              <button className="mobile-link" onClick={() => handleNavigate('register')}>Create Account</button>
             </>
           )}
         </div>

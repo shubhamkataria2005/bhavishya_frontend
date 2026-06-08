@@ -5,11 +5,11 @@ import Navbar from './components/navbar/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
 import HomePage from './pages/homePage/HomePage.jsx';
 import InventoryPage from './pages/inventory/InventoryPages.jsx';
-import DashboardPage from './pages/dashboardPage/DashboardPage.jsx';
 import LoginPage from './pages/loginPage/LoginPage.jsx';
 import RegisterPage from './pages/registerPage/RegisterPage.jsx';
 import AboutPage from './pages/aboutPage/AboutPage.jsx';
 import DistributorPage from './pages/distributorPage/DistributorPage.jsx';
+import ChatAssistant from './components/tools/ChatAssistant.jsx';
 import './App.css';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
     setSessionToken(token);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
-    setCurrentPage('dashboard');
+    setCurrentPage('home');
   };
 
   const handleLogout = () => {
@@ -70,23 +70,29 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
     else if (path === '/products' && currentPage !== 'inventory') onNavigate('inventory');
     else if (path === '/about' && currentPage !== 'about') onNavigate('about');
     else if (path === '/distributor' && currentPage !== 'distributor') onNavigate('distributor');
-    else if (path === '/dashboard' && currentPage !== 'dashboard') onNavigate('dashboard');
+    else if (path === '/chat' && currentPage !== 'chat') onNavigate('chat');
     else if (path === '/login' && currentPage !== 'login') onNavigate('login');
     else if (path === '/register' && currentPage !== 'register') onNavigate('register');
   }, [location.pathname]);
 
   useEffect(() => {
     switch (currentPage) {
-      case 'home':       if (location.pathname !== '/') navigate('/'); break;
-      case 'inventory':  if (location.pathname !== '/products') navigate('/products'); break;
-      case 'about':      if (location.pathname !== '/about') navigate('/about'); break;
+      case 'home':        if (location.pathname !== '/') navigate('/'); break;
+      case 'inventory':   if (location.pathname !== '/products') navigate('/products'); break;
+      case 'about':       if (location.pathname !== '/about') navigate('/about'); break;
       case 'distributor': if (location.pathname !== '/distributor') navigate('/distributor'); break;
-      case 'dashboard':  if (location.pathname !== '/dashboard') navigate('/dashboard'); break;
-      case 'login':      if (location.pathname !== '/login') navigate('/login'); break;
-      case 'register':   if (location.pathname !== '/register') navigate('/register'); break;
-      default:           if (location.pathname !== '/') navigate('/');
+      case 'chat':        if (location.pathname !== '/chat') navigate('/chat'); break;
+      case 'login':       if (location.pathname !== '/login') navigate('/login'); break;
+      case 'register':    if (location.pathname !== '/register') navigate('/register'); break;
+      default:            if (location.pathname !== '/') navigate('/');
     }
   }, [currentPage, navigate, location.pathname]);
+
+  const ChatPage = () => (
+    <div style={{ padding: '40px 32px', maxWidth: '800px', margin: '0 auto', height: '80vh', display: 'flex', flexDirection: 'column' }}>
+      <ChatAssistant user={user} />
+    </div>
+  );
 
   return (
     <div className="App">
@@ -102,11 +108,7 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
           <Route path="/products" element={<InventoryPage onNavigate={onNavigate} />} />
           <Route path="/about" element={<AboutPage onNavigate={onNavigate} />} />
           <Route path="/distributor" element={<DistributorPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
-          <Route path="/dashboard" element={
-            user
-              ? <DashboardPage user={user} sessionToken={sessionToken} onLogout={onLogout} onNavigate={onNavigate} />
-              : <LoginPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />
-          } />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/login" element={<LoginPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />} />
           <Route path="/register" element={<RegisterPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />} />
           <Route path="*" element={<HomePage onNavigate={onNavigate} />} />
