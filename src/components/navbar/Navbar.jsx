@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const Navbar = ({ currentPage, onNavigate }) => {
+const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -49,12 +49,23 @@ const Navbar = ({ currentPage, onNavigate }) => {
         </ul>
 
         <div className="navbar-auth">
-          <button className="btn-nav-login" onClick={() => handleNavigate('chat')}>
-            Ask AI
-          </button>
-          <button className="btn-nav-register" onClick={() => handleNavigate('distributor')}>
-            Order Now
-          </button>
+          {user ? (
+            <>
+              <span className="nav-username">Hi, {user.username}</span>
+              <button className="btn-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="btn-nav-login" onClick={() => handleNavigate('login')}>
+                Sign In
+              </button>
+              <button className="btn-nav-register" onClick={() => handleNavigate('distributor')}>
+                Order Now
+              </button>
+            </>
+          )}
         </div>
 
         <button
@@ -77,9 +88,17 @@ const Navbar = ({ currentPage, onNavigate }) => {
               {link.label}
             </button>
           ))}
-          <button className="mobile-link" onClick={() => handleNavigate('distributor')}>
-            Order Now
-          </button>
+          {user ? (
+            <>
+              <span className="mobile-link" style={{ opacity: 0.6 }}>Hi, {user.username}</span>
+              <button className="mobile-link mobile-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>Logout</button>
+            </>
+          ) : (
+            <>
+              <button className="mobile-link" onClick={() => handleNavigate('login')}>Sign In</button>
+              <button className="mobile-link" onClick={() => handleNavigate('register')}>Create Account</button>
+            </>
+          )}
         </div>
       )}
     </nav>
