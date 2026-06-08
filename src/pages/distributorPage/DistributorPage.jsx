@@ -18,7 +18,7 @@ const DistributorPage = ({ onNavigate }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/enquiry`, {
+      const response = await fetch(`${API_BASE_URL}/api/oil/enquiry`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -55,8 +55,6 @@ const DistributorPage = ({ onNavigate }) => {
 
   return (
     <div className="page" style={{ paddingBottom: '80px' }}>
-
-      {/* Header */}
       <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)', padding: '48px 0' }}>
         <div className="container">
           <div style={{ fontSize: '0.68rem', fontWeight: '700', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '12px' }}>
@@ -105,7 +103,6 @@ const DistributorPage = ({ onNavigate }) => {
             <h3 style={{ marginBottom: '24px' }}>Submit Your Enquiry</h3>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.65rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--muted2)', marginBottom: '6px' }}>Full Name *</label>
@@ -176,7 +173,6 @@ const DistributorPage = ({ onNavigate }) => {
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </div>

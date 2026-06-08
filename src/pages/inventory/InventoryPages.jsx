@@ -10,7 +10,7 @@ const InventoryPage = ({ onNavigate }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/products`)
+    fetch(`${API_BASE_URL}/api/oil/products`)
       .then(res => res.json())
       .then(data => {
         if (data.success) setProducts(data.products);
@@ -176,7 +176,7 @@ const InventoryPage = ({ onNavigate }) => {
               <button
                 className="btn-primary"
                 style={{ flex: 1, justifyContent: 'center' }}
-                onClick={() => { setSelectedProduct(null); onNavigate('register'); }}
+                onClick={() => { setSelectedProduct(null); onNavigate('distributor'); }}
               >
                 Order Now
               </button>
@@ -191,7 +191,6 @@ const InventoryPage = ({ onNavigate }) => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
