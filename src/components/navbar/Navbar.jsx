@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
+const Navbar = ({ currentPage, onNavigate }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -49,23 +49,12 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
         </ul>
 
         <div className="navbar-auth">
-          {user ? (
-            <>
-              <span className="nav-username">Hi, {user.username}</span>
-              <button className="btn-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <button className="btn-nav-login" onClick={() => handleNavigate('login')}>
-                Sign In
-              </button>
-              <button className="btn-nav-register" onClick={() => handleNavigate('distributor')}>
-                Order Now
-              </button>
-            </>
-          )}
+          <button className="btn-nav-login" onClick={() => handleNavigate('chat')}>
+            Ask AI
+          </button>
+          <button className="btn-nav-register" onClick={() => handleNavigate('distributor')}>
+            Order Now
+          </button>
         </div>
 
         <button
@@ -88,16 +77,9 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
               {link.label}
             </button>
           ))}
-          {user ? (
-            <>
-              <button className="mobile-link mobile-logout" onClick={() => { onLogout(); setMenuOpen(false); }}>Logout</button>
-            </>
-          ) : (
-            <>
-              <button className="mobile-link" onClick={() => handleNavigate('login')}>Sign In</button>
-              <button className="mobile-link" onClick={() => handleNavigate('register')}>Create Account</button>
-            </>
-          )}
+          <button className="mobile-link" onClick={() => handleNavigate('distributor')}>
+            Order Now
+          </button>
         </div>
       )}
     </nav>
