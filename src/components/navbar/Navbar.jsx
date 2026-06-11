@@ -49,14 +49,24 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
             </li>
           ))}
           {user && (
-            <li>
-              <button
-                className={`nav-link ${currentPage === 'messages' ? 'active' : ''}`}
-                onClick={() => handleNavigate('messages')}
-              >
-                💬 Messages
-              </button>
-            </li>
+            <>
+              <li>
+                <button
+                  className={`nav-link ${currentPage === 'dashboard' ? 'active' : ''}`}
+                  onClick={() => handleNavigate('dashboard')}
+                >
+                  🏠 Dashboard
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`nav-link ${currentPage === 'messages' ? 'active' : ''}`}
+                  onClick={() => handleNavigate('messages')}
+                >
+                  💬 Messages
+                </button>
+              </li>
+            </>
           )}
           {isAdmin && (
             <li>
@@ -111,12 +121,14 @@ const Navbar = ({ user, currentPage, onNavigate, onLogout }) => {
             </button>
           ))}
           {user && (
-            <button
-              className={`mobile-link ${currentPage === 'messages' ? 'active' : ''}`}
-              onClick={() => handleNavigate('messages')}
-            >
-              💬 Messages
-            </button>
+            <>
+              <button className={`mobile-link ${currentPage === 'dashboard' ? 'active' : ''}`} onClick={() => handleNavigate('dashboard')}>
+                🏠 Dashboard
+              </button>
+              <button className={`mobile-link ${currentPage === 'messages' ? 'active' : ''}`} onClick={() => handleNavigate('messages')}>
+                💬 Messages
+              </button>
+            </>
           )}
           {isAdmin && (
             <button className="mobile-link admin-link" onClick={() => handleNavigate('admin')}>

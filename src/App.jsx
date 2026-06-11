@@ -11,6 +11,7 @@ import LoginPage from './pages/loginPage/LoginPage.jsx';
 import RegisterPage from './pages/registerPage/RegisterPage.jsx';
 import AdminPage from './pages/admin/AdminPage.jsx';
 import MessagesPage from './pages/messagesPage/MessagesPage.jsx';
+import DashboardPage from './pages/dashboardPage/DashboardPage.jsx';
 import ChatAssistant from './components/tools/ChatAssistant.jsx';
 import './App.css';
 
@@ -38,7 +39,7 @@ function App() {
     if (userData.role === 'ADMIN' || userData.role === 'SUPER_ADMIN') {
       setCurrentPage('admin');
     } else {
-      setCurrentPage('home');
+      setCurrentPage('dashboard');
     }
   };
 
@@ -79,6 +80,7 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
     else if (path === '/register') onNavigate('register');
     else if (path === '/admin') onNavigate('admin');
     else if (path === '/messages') onNavigate('messages');
+    else if (path === '/dashboard') onNavigate('dashboard');
   }, [location.pathname]);
 
   useEffect(() => {
@@ -92,6 +94,7 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
       register: '/register',
       admin: '/admin',
       messages: '/messages',
+      dashboard: '/dashboard',
     };
     const target = map[currentPage] || '/';
     if (location.pathname !== target) navigate(target);
@@ -122,6 +125,7 @@ function AppContent({ user, sessionToken, currentPage, onNavigate, onLoginSucces
           <Route path="/register" element={<RegisterPage onLoginSuccess={onLoginSuccess} onNavigate={onNavigate} />} />
           <Route path="/admin" element={<AdminPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
           <Route path="/messages" element={<MessagesPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
+          <Route path="/dashboard" element={<DashboardPage user={user} sessionToken={sessionToken} onNavigate={onNavigate} />} />
           <Route path="*" element={<HomePage onNavigate={onNavigate} />} />
         </Routes>
       </main>
